@@ -146,8 +146,9 @@ document.addEventListener("DOMContentLoaded", () => {
   allFaqItems.forEach(item => {
     const header = item.querySelector(".faq-header");
     const body = item.querySelector(".faq-body");
+    if (!header || !body) return;
 
-    header.addEventListener("click", () => {
+    function toggleFaq() {
       const isOpen = item.classList.contains("active");
 
       // Scope closure to items in the same container
@@ -155,17 +156,40 @@ document.addEventListener("DOMContentLoaded", () => {
       container.querySelectorAll(".faq-item").forEach(sibling => {
         if (sibling !== item && sibling.classList.contains("active")) {
           sibling.classList.remove("active");
+          const sibHeader = sibling.querySelector(".faq-header");
           const sibBody = sibling.querySelector(".faq-body");
           if (sibBody) sibBody.style.maxHeight = null;
+          if (sibHeader) sibHeader.setAttribute("aria-expanded", "false");
         }
       });
 
       if (isOpen) {
         item.classList.remove("active");
         body.style.maxHeight = null;
+        header.setAttribute("aria-expanded", "false");
       } else {
         item.classList.add("active");
-        body.style.maxHeight = (body.scrollHeight + 30) + "px";
+        body.style.maxHeight = (body.scrollHeight + 35) + "px";
+        header.setAttribute("aria-expanded", "true");
+
+        // Smooth scroll opened item into view inside scroll box
+        if (container && container.id === "faqScrollBox") {
+          setTimeout(() => {
+            const itemRect = item.getBoundingClientRect();
+            const boxRect = container.getBoundingClientRect();
+            if (itemRect.top < boxRect.top || itemRect.bottom > boxRect.bottom) {
+              item.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+          }, 150);
+        }
+      }
+    }
+
+    header.addEventListener("click", toggleFaq);
+    header.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggleFaq();
       }
     });
   });
@@ -177,9 +201,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const faqClearBtn = document.getElementById("faqClearBtn");
   const faqFilterBtns = document.querySelectorAll(".faq-filter-btn");
   const faqStats = document.getElementById("faqStats");
+  const faqEmptyState = document.getElementById("faqEmptyState");
 
   let currentFilter = "all";
   let currentSearch = "";
+
+  function closeAllArchiveItems() {
+    scrollItems.forEach(item => {
+      if (item.classList.contains("active")) {
+        item.classList.remove("active");
+        const body = item.querySelector(".faq-body");
+        const header = item.querySelector(".faq-header");
+        if (body) body.style.maxHeight = null;
+        if (header) header.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
 
   function updateArchiveList() {
     let matchedCount = 0;
@@ -201,13 +238,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
+    // Toggle Empty State
+    if (faqEmptyState) {
+      faqEmptyState.style.display = (matchedCount === 0) ? "block" : "none";
+    }
+
     if (faqStats) {
       if (query) {
-        faqStats.textContent = `Found ${matchedCount} matching topics in archive`;
+        if (matchedCount === 0) {
+          faqStats.textContent = `No topics matched "${query}" in archive`;
+        } else {
+          faqStats.textContent = `Found ${matchedCount} matching topics for "${query}"`;
+        }
       } else if (currentFilter !== "all") {
         faqStats.textContent = `Showing ${matchedCount} topics in this category`;
       } else {
-        faqStats.textContent = `Showing all ${matchedCount} topics inside scroll archive`;
+        faqStats.textContent = `Showing all ${matchedCount} topics inside archive`;
       }
     }
 
@@ -225,6 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.classList.remove("active");
       }
     });
+    closeAllArchiveItems();
     updateArchiveList();
   }
 
@@ -232,15 +279,20 @@ document.addEventListener("DOMContentLoaded", () => {
     faqSearchInput.addEventListener("input", (e) => {
       currentSearch = e.target.value;
       if (faqClearBtn) faqClearBtn.style.display = currentSearch ? "block" : "none";
+      closeAllArchiveItems();
       updateArchiveList();
     });
   }
 
   if (faqClearBtn) {
     faqClearBtn.addEventListener("click", () => {
-      if (faqSearchInput) faqSearchInput.value = "";
+      if (faqSearchInput) {
+        faqSearchInput.value = "";
+        faqSearchInput.focus();
+      }
       currentSearch = "";
       faqClearBtn.style.display = "none";
+      closeAllArchiveItems();
       updateArchiveList();
     });
   }
