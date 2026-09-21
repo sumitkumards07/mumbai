@@ -1,9 +1,10 @@
 /* =========================================================
    RESPONSIVE STYLESHEET - GREEN & ROUNDED THEME
-   Breakpoints: 1200px, 1024px, 768px, 576px, 390px, 360px
+   Mobile First Optimized: 1200px, 1024px, 768px, 640px, 480px, 380px, 360px
+   Shree Kshetrapal Jain Atithi Bhavan
    ========================================================= */
 
-/* Large Desktop / Laptops (<= 1200px) */
+/* --- Large Desktop / Laptops (<= 1200px) --- */
 @media (max-width: 1200px) {
   .hero-grid {
     grid-template-columns: 1fr 1fr;
@@ -25,7 +26,7 @@
   }
 }
 
-/* Tablets (<= 1024px) */
+/* --- Tablets & Smaller Laptops (<= 1024px) --- */
 @media (max-width: 1024px) {
   .nav-menu {
     gap: var(--space-2);
@@ -91,227 +92,580 @@
   }
 }
 
-/* Mobile & Small Tablets (<= 768px) */
+/* --- Mobile & Tablet Portrait (<= 768px) --- */
 @media (max-width: 768px) {
   :root {
-    --header-height: 72px;
+    --header-height: 68px;
+  }
+
+  html,
+  body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100vw !important;
   }
 
   body {
-    padding-bottom: 80px; /* space for mobile sticky bar */
+    padding-bottom: calc(84px + env(safe-area-inset-bottom)) !important; /* Generous clearance for floating mobile bar */
   }
 
+  /* Prevent iOS Safari from auto-zooming on input focus */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  .section-padding {
+    padding: 3.5rem 0;
+  }
+
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  /* 1. Mobile Capsule Navbar */
   .site-nav {
     top: 8px;
-    padding: 0 var(--space-3);
+    padding: 0 10px;
   }
 
   .nav-container {
-    padding: 0.4rem var(--space-4);
+    padding: 0.38rem 0.85rem;
+    border-radius: var(--radius-full);
+  }
+
+  .brand-logo {
+    gap: 0.6rem;
+    min-width: 0;
+  }
+
+  .brand-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .brand-text {
+    min-width: 0;
+  }
+
+  .brand-name {
+    font-size: clamp(0.92rem, 3.6vw, 1.08rem);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .brand-tagline {
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
   }
 
   .nav-menu,
-  .nav-actions .btn-primary {
-    display: none;
+  .nav-actions .nav-btn-call {
+    display: none !important;
   }
 
   .nav-toggle {
-    display: flex;
+    display: flex !important;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+    transition: all var(--transition-fast);
   }
 
-  .hero-section {
-    padding-top: calc(var(--header-height) + var(--space-6));
-    padding-bottom: var(--space-12);
+  .nav-toggle:active {
+    transform: scale(0.92);
   }
 
+  /* 2. Floating Mobile Sticky Action Bar */
+  .mobile-sticky-bar {
+    display: block !important;
+  }
+
+  .floating-actions-desktop {
+    display: none !important;
+  }
+
+  /* 3. Full-Image Hero Section */
+  .hero-section-full {
+    min-height: 75vh;
+    min-height: calc(100svh - 60px);
+    background-attachment: scroll !important; /* Critical fix for iOS Safari background zoom */
+    padding-top: calc(var(--header-height) + 20px);
+    padding-bottom: 2.5rem;
+  }
+
+  .hero-full-container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .hero-title-full {
+    font-size: clamp(1.8rem, 6.8vw, 2.6rem);
+    line-height: 1.18;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-subtitle-full {
+    font-size: clamp(0.88rem, 2.9vw, 1rem);
+    line-height: 1.6;
+    margin-bottom: 1.6rem;
+    padding: 0 0.5rem;
+  }
+
+  .hero-actions-full {
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+    gap: 0.75rem;
+    margin: 0 auto;
+  }
+
+  .btn-hero-book,
+  .btn-hero-call {
+    width: 100%;
+    min-height: 48px;
+    font-size: 1rem;
+    padding: 0.8rem 1.4rem;
+  }
+
+  /* 4. Plan Your Stay Quick Card */
   .booking-card-inner {
     grid-template-columns: 1fr;
-    gap: var(--space-4);
+    gap: 1.1rem;
     text-align: center;
-    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    border-radius: var(--radius-xl);
   }
 
   .booking-card-inner .btn {
     width: 100%;
+    min-height: 46px;
+    justify-content: center;
   }
 
+  /* 5. About Section */
   .about-welcome-card {
-    padding: var(--space-6);
+    padding: 1.25rem;
+    border-radius: var(--radius-xl);
+  }
+
+  .about-visual-box img {
+    height: 240px;
+    object-fit: cover;
     border-radius: var(--radius-lg);
   }
 
   .about-faq-banner {
     flex-direction: column;
     text-align: center;
-    gap: var(--space-4);
-    padding: var(--space-6);
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: var(--radius-lg);
   }
 
+  .about-faq-banner .btn {
+    width: 100%;
+    min-height: 46px;
+    justify-content: center;
+  }
+
+  /* 6. Rooms Grid */
   .rooms-grid {
     grid-template-columns: 1fr;
     max-width: 440px;
     margin: 0 auto;
-  }
-
-  .gallery-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-3);
-  }
-
-  .gallery-card {
-    height: 240px;
-  }
-
-  .review-card-luxury {
-    flex: 0 0 100%;
-    padding: 1.75rem 1.4rem;
-  }
-
-  .review-nav-btn {
-    width: 38px;
-    height: 38px;
-    font-size: 0.9rem;
-  }
-
-  .review-nav-btn.review-prev {
-    left: -8px;
-  }
-
-  .review-nav-btn.review-next {
-    right: -8px;
-  }
-
-  .reviews-score-capsule {
-    padding: 0.6rem 1.25rem;
-    gap: 0.8rem;
-  }
-
-  .reviews-score-hero {
-    font-size: 1.2rem;
-  }
-
-  .reviews-reassurance-banner {
-    flex-direction: column;
-    text-align: center;
-    padding: 2rem 1.4rem;
     gap: 1.5rem;
   }
 
-  .reassurance-actions {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .reassurance-actions .btn-reassurance-cta,
-  .reassurance-actions .btn-reassurance-call {
-    width: 100%;
-  }
-
-  .contact-banner {
-    padding: var(--space-8) var(--space-4);
+  .room-card {
     border-radius: var(--radius-xl);
   }
 
-  .contact-banner-actions {
-    flex-direction: column;
-    width: 100%;
+  .room-card-img-wrap {
+    height: 210px;
   }
 
-  .contact-banner-actions .btn {
-    width: 100%;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
-  }
-
-  .footer-bottom {
-    flex-direction: column;
-    gap: var(--space-3);
-    text-align: center;
-  }
-
-  /* Show Sticky Mobile Bar on < 768px */
-  .mobile-sticky-bar {
-    display: block;
-  }
-
-  .floating-actions-desktop {
-    display: none;
-  }
-
-  .modal-dialog {
-    max-height: 90vh;
-    overflow-y: auto;
-    border-radius: var(--radius-lg);
-  }
-
-  .modal-img-wrap {
-    height: 200px;
-  }
-
-  .modal-body {
-    padding: var(--space-4);
-  }
-}
-
-/* Small Mobile Screens (<= 480px) */
-@media (max-width: 480px) {
-  .hero-actions {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .hero-actions .btn {
-    width: 100%;
-  }
-
-  .hero-badge-title {
-    font-size: 0.95rem;
+  .room-card-body {
+    padding: 1.25rem;
   }
 
   .room-footer {
     flex-direction: column;
-    gap: var(--space-3);
+    gap: 1rem;
     align-items: stretch;
     text-align: center;
   }
 
   .room-card-actions {
     flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
   }
 
   .room-card-actions .btn {
     width: 100%;
+    min-height: 46px;
+    justify-content: center;
+  }
+
+  /* 7. Photo Gallery */
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .gallery-card {
+    height: 160px;
+    border-radius: var(--radius-md);
+  }
+
+  /* 8. Luxury Reviews Carousel */
+  .reviews-carousel-outer {
+    padding: 0 0.5rem;
+  }
+
+  .reviews-viewport {
+    padding: 0.5rem 0 1rem 0;
+  }
+
+  .review-card-luxury {
+    flex: 0 0 100%;
+    padding: 1.6rem 1.25rem;
+    border-radius: var(--radius-xl);
+  }
+
+  .review-nav-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 12px rgba(14, 59, 44, 0.15);
+  }
+
+  .review-nav-btn.review-prev {
+    left: 2px;
+  }
+
+  .review-nav-btn.review-next {
+    right: 2px;
+  }
+
+  .reviews-score-capsule {
+    padding: 0.55rem 1.1rem;
+    gap: 0.7rem;
+  }
+
+  .reviews-score-hero {
+    font-size: 1.15rem;
+  }
+
+  .reviews-reassurance-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.75rem 1.25rem;
+    gap: 1.25rem;
+    border-radius: var(--radius-xl);
+  }
+
+  .reassurance-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.6rem;
+  }
+
+  .reassurance-actions .btn-reassurance-cta,
+  .reassurance-actions .btn-reassurance-call {
+    width: 100%;
+    min-height: 46px;
+    justify-content: center;
+  }
+
+  /* 9. FAQ & Knowledge Archive */
+  .faq-featured-section {
+    padding: 0;
+  }
+
+  .faq-archive-section {
+    padding: 1.25rem 1rem;
+    border-radius: var(--radius-xl);
+  }
+
+  /* Swipeable Horizontal Filter Pills on Mobile */
+  .faq-filters {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 8px;
+    padding: 4px 2px 10px 2px;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .faq-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .faq-filter-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding: 0.55rem 1rem;
+    font-size: 0.76rem;
+  }
+
+  .faq-search-wrapper {
+    margin-bottom: 1rem;
+    border-radius: var(--radius-full);
+  }
+
+  .faq-scroll-box {
+    max-height: 380px;
+    padding-right: 4px;
   }
 
   .faq-header {
-    padding: var(--space-4);
+    padding: 0.85rem 1rem;
+    min-height: 52px;
   }
 
   .faq-q-title {
-    font-size: 0.98rem;
+    font-size: 0.95rem;
+    line-height: 1.4;
   }
 
   .faq-body-content {
-    padding: var(--space-3) var(--space-4) var(--space-4);
+    padding: 0.4rem 1rem 1rem 1rem;
     font-size: 0.9rem;
+    line-height: 1.65;
   }
 
-  .mobile-drawer {
-    width: 88%;
+  /* 10. Location Section */
+  .location-split {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .location-info-card {
+    padding: 1.25rem;
+    border-radius: var(--radius-xl);
+  }
+
+  .map-frame-wrapper iframe {
+    height: 260px;
+    border-radius: var(--radius-lg);
+  }
+
+  .location-info-card .btn {
+    width: 100%;
+    min-height: 46px;
+    justify-content: center;
+  }
+
+  /* 11. Contact Banner */
+  .contact-banner {
+    padding: 2rem 1.25rem;
+    border-radius: var(--radius-xl);
+    text-align: center;
+  }
+
+  .contact-banner-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.65rem;
+  }
+
+  .contact-banner-actions .btn {
+    width: 100%;
+    min-height: 48px;
+    justify-content: center;
+  }
+
+  /* 12. Footer */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .footer-links li {
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-links a {
+    display: inline-block;
+    padding: 4px 0;
+    min-height: 36px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 0.6rem;
+    text-align: center;
+  }
+
+  /* 13. Modals */
+  .modal-dialog {
+    width: 94vw;
+    max-width: 440px;
+    max-height: 88vh;
+    overflow-y: auto;
+    border-radius: var(--radius-xl);
+  }
+
+  .modal-img-wrap {
+    height: 190px;
+  }
+
+  .modal-body {
+    padding: 1.25rem;
+  }
+
+  .lightbox-content {
+    max-width: 95vw;
+    max-height: 85vh;
+    border-radius: var(--radius-lg);
+  }
+
+  .lightbox-close {
+    top: 12px;
+    right: 12px;
+    width: 44px;
+    height: 44px;
+    font-size: 1.3rem;
   }
 }
 
-/* Extra small devices (<= 360px) */
-@media (max-width: 360px) {
+/* --- Medium Phones (<= 640px) --- */
+@media (max-width: 640px) {
+  /* WhatsApp button in nav: icon-only circular pill for compact elegance */
+  .nav-btn-wa {
+    width: 38px;
+    height: 38px;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full) !important;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+  }
+
+  .nav-btn-wa .nav-btn-text {
+    display: none !important;
+  }
+
+  .nav-actions {
+    gap: 0.45rem;
+  }
+}
+
+/* --- Compact Mobile Devices (<= 480px) --- */
+@media (max-width: 480px) {
+  .section-padding {
+    padding: 3rem 0;
+  }
+
+  .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
   .brand-name {
-    font-size: 0.98rem;
+    font-size: 0.95rem;
   }
 
   .brand-tagline {
-    font-size: 0.62rem;
+    font-size: 0.58rem;
+  }
+
+  .hero-title-full {
+    font-size: 1.85rem;
+  }
+
+  .hero-subtitle-full {
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .faq-q-title {
+    font-size: 0.92rem;
+  }
+
+  .faq-header {
+    padding: 0.8rem 0.85rem;
+  }
+
+  .faq-body-content {
+    padding: 0.35rem 0.85rem 0.85rem 0.85rem;
+    font-size: 0.88rem;
+  }
+
+  .mobile-drawer {
+    width: min(300px, 86vw);
+  }
+}
+
+/* --- Extra-Small Devices & Foldables (<= 380px) --- */
+@media (max-width: 380px) {
+  .site-nav {
+    padding: 0 6px;
+  }
+
+  .nav-container {
+    padding: 0.32rem 0.6rem;
+  }
+
+  .brand-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+
+  .brand-name {
+    font-size: 0.88rem;
+  }
+
+  /* Hide tagline on ultra-narrow phones to ensure single clean line */
+  .brand-tagline {
+    display: none !important;
+  }
+
+  .nav-toggle {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .nav-btn-wa {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-card {
+    height: 180px;
+  }
+
+  .mobile-sticky-bar {
+    left: 8px;
+    right: 8px;
+    padding: 5px 6px;
   }
 
   .mobile-bar-actions {
@@ -319,7 +673,26 @@
   }
 
   .mobile-bar-btn {
-    padding: 0.55rem 0.35rem;
-    font-size: 0.7rem;
+    padding: 0.58rem 0.25rem;
+    font-size: 0.66rem;
+    gap: 3px;
+    letter-spacing: 0.02em;
+  }
+
+  .mobile-bar-btn i {
+    font-size: 0.85rem;
+  }
+}
+
+/* --- Micro Devices (<= 360px) --- */
+@media (max-width: 360px) {
+  .hero-title-full {
+    font-size: 1.65rem;
+  }
+
+  .btn-hero-book,
+  .btn-hero-call {
+    font-size: 0.92rem;
+    padding: 0.75rem 1rem;
   }
 }

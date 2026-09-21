@@ -140,8 +140,8 @@
       </ul>
 
       <div class="nav-actions">
-        <a href="https://wa.me/919760933661?text=Hello%2C%20I%20want%20to%20know%20about%20room%20availability%20and%20booking" target="_blank" class="btn btn-whatsapp btn-sm" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-        <a href="tel:+919760933661" class="btn btn-primary btn-sm" aria-label="Call +91 9760933661"><i class="fas fa-phone"></i> Call Now</a>
+        <a href="https://wa.me/919760933661?text=Hello%2C%20I%20want%20to%20know%20about%20room%20availability%20and%20booking" target="_blank" class="btn btn-whatsapp btn-sm nav-btn-wa" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i><span class="nav-btn-text"> WhatsApp</span></a>
+        <a href="tel:+919760933661" class="btn btn-primary btn-sm nav-btn-call" aria-label="Call +91 9760933661"><i class="fas fa-phone"></i><span class="nav-btn-text"> Call Now</span></a>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation Menu"><i class="fas fa-bars"></i></button>
       </div>
     </div>
@@ -158,14 +158,14 @@
       <button class="drawer-close" id="drawerClose" aria-label="Close Menu"><i class="fas fa-times"></i></button>
     </div>
     <ul class="drawer-menu">
-      <li><a href="#home" class="drawer-link">Home</a></li>
-      <li><a href="#about" class="drawer-link">About & Heritage</a></li>
-      <li><a href="#rooms" class="drawer-link">Rooms & Tariffs</a></li>
-      <li><a href="#gallery" class="drawer-link">Photo Gallery</a></li>
-      <li><a href="#testimonials" class="drawer-link">Guest Reviews</a></li>
-      <li><a href="#location" class="drawer-link">Location & Map</a></li>
-      <li><a href="#faq" class="drawer-link">FAQ & Guide (213 Items)</a></li>
-      <li><a href="#contact" class="drawer-link">Contact Us</a></li>
+      <li><a href="#home" class="drawer-link"><i class="fas fa-home"></i> <span>Home</span></a></li>
+      <li><a href="#about" class="drawer-link"><i class="fas fa-landmark"></i> <span>About & Heritage</span></a></li>
+      <li><a href="#rooms" class="drawer-link"><i class="fas fa-bed"></i> <span>Rooms & Tariffs</span></a></li>
+      <li><a href="#gallery" class="drawer-link"><i class="fas fa-images"></i> <span>Photo Gallery</span></a></li>
+      <li><a href="#testimonials" class="drawer-link"><i class="fas fa-star"></i> <span>Guest Reviews</span></a></li>
+      <li><a href="#location" class="drawer-link"><i class="fas fa-map-marker-alt"></i> <span>Location & Map</span></a></li>
+      <li><a href="#faq" class="drawer-link"><i class="fas fa-question-circle"></i> <span>FAQ & Guide (213 Items)</span></a></li>
+      <li><a href="#contact" class="drawer-link"><i class="fas fa-phone-alt"></i> <span>Contact Us</span></a></li>
     </ul>
     <div class="drawer-actions">
       <a href="tel:+919760933661" class="btn btn-primary"><i class="fas fa-phone me-2"></i> Call +91 9760933661</a>
@@ -3668,11 +3668,20 @@
   </aside>
 
   <!-- ==================== MOBILE STICKY BOTTOM BAR ==================== -->
-  <aside class="mobile-sticky-bar" aria-label="Mobile Quick Action Bar">
+  <aside class="mobile-sticky-bar" id="mobileStickyBar" aria-label="Mobile Quick Action Bar">
     <div class="mobile-bar-actions">
-      <a href="tel:+919760933661" class="mobile-bar-btn mobile-bar-call"><i class="fas fa-phone"></i> Call</a>
-      <a href="https://wa.me/919760933661?text=Hello%2C%20I%20want%20to%20know%20about%20room%20availability%20and%20booking" target="_blank" class="mobile-bar-btn mobile-bar-wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-      <a href="#rooms" class="mobile-bar-btn mobile-bar-book"><i class="fas fa-calendar-check"></i> Book Now</a>
+      <a href="tel:+919760933661" class="mobile-bar-btn mobile-bar-call" aria-label="Call Reception at +91 9760933661">
+        <i class="fas fa-phone-alt"></i>
+        <span>Call</span>
+      </a>
+      <a href="https://wa.me/919760933661?text=Hello%2C%20I%20want%20to%20know%20about%20room%20availability%20and%20booking" target="_blank" class="mobile-bar-btn mobile-bar-wa" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+        <span>WhatsApp</span>
+      </a>
+      <a href="#rooms" class="mobile-bar-btn mobile-bar-book" aria-label="Browse Rooms and Tariffs">
+        <i class="fas fa-bed"></i>
+        <span>Rooms</span>
+      </a>
     </div>
   </aside>
 

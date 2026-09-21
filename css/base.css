@@ -10,6 +10,9 @@ html {
   scroll-padding-top: calc(var(--header-height) + 20px);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
 }
 
 body {
@@ -20,6 +23,8 @@ body {
   line-height: 1.75;
   overflow-x: hidden;
   position: relative;
+  width: 100%;
+  max-width: 100vw;
 }
 
 /* Typography Defaults */
@@ -72,11 +77,15 @@ img {
   display: block;
 }
 
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
 button {
   cursor: pointer;
   border: none;
   background: none;
-  font-family: inherit;
 }
 
 /* Accessibility Focus Outline */

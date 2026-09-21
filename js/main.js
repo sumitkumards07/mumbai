@@ -293,7 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getVisibleCardsCount() {
       const w = window.innerWidth;
-      if (w <= 640) return 1;
+      if (w <= 768) return 1;
       if (w <= 1024) return 2;
       return 3;
     }
