@@ -1,0 +1,91 @@
+:root {
+  /* Green Theme Color Palette */
+  --primary-green: #165B44;
+  --deep-green: #0E3B2C;
+  --green-light: #217B5D;
+  --green-dark: #09281E;
+  --green-subtle: rgba(22, 91, 68, 0.08);
+  --green-tint: #EAF3EE;
+  --green-surface: #F2F7F4;
+
+  /* Aliases for semantic usage */
+  --primary-burgundy: var(--primary-green);
+  --deep-burgundy: var(--deep-green);
+  --burgundy-light: var(--green-light);
+  --burgundy-dark: var(--green-dark);
+  --burgundy-subtle: var(--green-subtle);
+
+  --warm-ivory: #F7FAF7;
+  --ivory-surface: #FFFFFF;
+  --cream: #ECF3ED;
+  --cream-dark: #DEE9E0;
+  --cream-subtle: rgba(236, 243, 237, 0.6);
+
+  --antique-gold: #C5A059;
+  --gold-light: #DFC080;
+  --gold-dark: #9F7C38;
+  --gold-subtle: rgba(197, 160, 89, 0.15);
+  --gold-border: rgba(197, 160, 89, 0.35);
+
+  --dark-charcoal: #17241E;
+  --charcoal-light: #25382F;
+  --soft-grey: #5A6D63;
+  --border-grey: #DCE6DF;
+  --white: #FFFFFF;
+  --whatsapp-green: #25D366;
+  --whatsapp-hover: #20BA59;
+
+  /* Typography */
+  --font-serif: 'DM Serif Display', 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-ui: 'Inter', sans-serif;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+
+  /* Elevation & Shadows */
+  --shadow-subtle: 0 4px 12px rgba(14, 59, 44, 0.04);
+  --shadow-sm: 0 6px 18px rgba(14, 59, 44, 0.06);
+  --shadow-md: 0 10px 30px rgba(14, 59, 44, 0.08);
+  --shadow-lg: 0 18px 45px rgba(14, 59, 44, 0.12);
+  --shadow-xl: 0 26px 60px rgba(14, 59, 44, 0.18);
+  --shadow-gold: 0 8px 24px rgba(197, 160, 89, 0.25);
+
+  /* "Rounded Everything" Design Tokens */
+  --radius-xs: 12px;
+  --radius-sm: 16px;
+  --radius-md: 22px;
+  --radius-lg: 28px;
+  --radius-xl: 36px;
+  --radius-2xl: 44px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 450ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  --max-content: 1240px;
+  --header-height: 84px;
+}
