@@ -150,18 +150,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function toggleFaq() {
       const isOpen = item.classList.contains("active");
-
-      // Scope closure to items in the same container
       const container = item.parentElement;
-      container.querySelectorAll(".faq-item").forEach(sibling => {
-        if (sibling !== item && sibling.classList.contains("active")) {
-          sibling.classList.remove("active");
-          const sibHeader = sibling.querySelector(".faq-header");
-          const sibBody = sibling.querySelector(".faq-body");
+
+      // Close only the currently active sibling in the same container (fast O(1))
+      if (container) {
+        const activeSibling = container.querySelector(".faq-item.active");
+        if (activeSibling && activeSibling !== item) {
+          activeSibling.classList.remove("active");
+          const sibBody = activeSibling.querySelector(".faq-body");
+          const sibHeader = activeSibling.querySelector(".faq-header");
           if (sibBody) sibBody.style.maxHeight = null;
           if (sibHeader) sibHeader.setAttribute("aria-expanded", "false");
         }
-      });
+      }
 
       if (isOpen) {
         item.classList.remove("active");
@@ -169,18 +170,19 @@ document.addEventListener("DOMContentLoaded", () => {
         header.setAttribute("aria-expanded", "false");
       } else {
         item.classList.add("active");
-        body.style.maxHeight = (body.scrollHeight + 35) + "px";
+        body.style.maxHeight = (body.scrollHeight + 45) + "px";
         header.setAttribute("aria-expanded", "true");
 
-        // Smooth scroll opened item into view inside scroll box
-        if (container && container.id === "faqScrollBox") {
-          setTimeout(() => {
-            const itemRect = item.getBoundingClientRect();
-            const boxRect = container.getBoundingClientRect();
-            if (itemRect.top < boxRect.top || itemRect.bottom > boxRect.bottom) {
-              item.scrollIntoView({ behavior: "smooth", block: "nearest" });
-            }
-          }, 150);
+        // If inside scroll box and not expanded, gently adjust scrollBox.scrollTop if out of view
+        // NEVER scroll window or call item.scrollIntoView to prevent jarring viewport jumps!
+        if (container && container.id === "faqScrollBox" && !container.classList.contains("expanded")) {
+          const itemTop = item.offsetTop - container.offsetTop;
+          const itemBottom = itemTop + item.offsetHeight;
+          if (itemTop < container.scrollTop) {
+            container.scrollTo({ top: itemTop, behavior: "smooth" });
+          } else if (itemBottom > container.scrollTop + container.clientHeight) {
+            container.scrollTo({ top: itemBottom - container.clientHeight + 20, behavior: "smooth" });
+          }
         }
       }
     }
@@ -194,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 6. Archive Scroll Box Search & Category Filter
+  // 6. Comprehensive Directory Search, Filter & View Controls
   const scrollBox = document.getElementById("faqScrollBox");
   const scrollItems = scrollBox ? Array.from(scrollBox.querySelectorAll(".faq-item")) : [];
   const faqSearchInput = document.getElementById("faqSearchInput");
@@ -202,6 +204,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const faqFilterBtns = document.querySelectorAll(".faq-filter-btn");
   const faqStats = document.getElementById("faqStats");
   const faqEmptyState = document.getElementById("faqEmptyState");
+  const faqResetSearchBtn = document.getElementById("faqResetSearchBtn");
+  const faqToggleViewBtn = document.getElementById("faqToggleViewBtn");
+  const faqToggleViewBtnBottom = document.getElementById("faqToggleViewBtnBottom");
+  const faqToggleViewText = document.getElementById("faqToggleViewText");
+  const faqScrollHint = document.getElementById("faqScrollHint");
 
   let currentFilter = "all";
   let currentSearch = "";
@@ -221,14 +228,20 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateArchiveList() {
     let matchedCount = 0;
     const query = currentSearch.toLowerCase().trim();
+    const queryTokens = query ? query.split(/\s+/).filter(Boolean) : [];
 
     scrollItems.forEach(item => {
-      const q = item.getAttribute("data-question") || "";
-      const a = item.getAttribute("data-answer") || "";
+      const q = (item.getAttribute("data-question") || "") + " " + (item.querySelector(".faq-q-title")?.textContent || "");
+      const a = (item.getAttribute("data-answer") || "") + " " + (item.querySelector(".faq-body-content")?.textContent || "");
       const category = item.getAttribute("data-category") || "all";
 
       const matchesCategory = (currentFilter === "all" || category.includes(currentFilter));
-      const matchesSearch = !query || q.toLowerCase().includes(query) || a.toLowerCase().includes(query);
+
+      let matchesSearch = true;
+      if (queryTokens.length > 0) {
+        const fullText = (q + " " + a + " " + category).toLowerCase();
+        matchesSearch = queryTokens.every(token => fullText.includes(token));
+      }
 
       if (matchesCategory && matchesSearch) {
         matchedCount++;
@@ -246,24 +259,31 @@ document.addEventListener("DOMContentLoaded", () => {
     if (faqStats) {
       if (query) {
         if (matchedCount === 0) {
-          faqStats.textContent = `No topics matched "${query}" in archive`;
+          faqStats.textContent = `No topics matched "${currentSearch}"`;
         } else {
-          faqStats.textContent = `Found ${matchedCount} matching topics for "${query}"`;
+          faqStats.textContent = `Found ${matchedCount} matching topics for "${currentSearch}"`;
         }
       } else if (currentFilter !== "all") {
-        faqStats.textContent = `Showing ${matchedCount} topics in this category`;
+        const catBtn = Array.from(faqFilterBtns).find(b => b.getAttribute("data-filter") === currentFilter);
+        const catName = catBtn ? catBtn.textContent.replace(/\s*\(\d+\)/, "").trim() : currentFilter;
+        faqStats.textContent = `Showing ${matchedCount} topics in ${catName}`;
       } else {
-        faqStats.textContent = `Showing all ${matchedCount} topics inside archive`;
+        faqStats.textContent = `Showing all ${matchedCount} topics inside directory`;
       }
     }
 
-    if (scrollBox) {
+    if (scrollBox && !scrollBox.classList.contains("expanded")) {
       scrollBox.scrollTop = 0;
     }
   }
 
-  function setCategory(cat) {
+  function setCategory(cat, clearSearch = true) {
     currentFilter = cat;
+    if (clearSearch && faqSearchInput) {
+      faqSearchInput.value = "";
+      currentSearch = "";
+      if (faqClearBtn) faqClearBtn.style.display = "none";
+    }
     faqFilterBtns.forEach(btn => {
       if (btn.getAttribute("data-filter") === cat) {
         btn.classList.add("active");
@@ -279,6 +299,16 @@ document.addEventListener("DOMContentLoaded", () => {
     faqSearchInput.addEventListener("input", (e) => {
       currentSearch = e.target.value;
       if (faqClearBtn) faqClearBtn.style.display = currentSearch ? "block" : "none";
+
+      // When searching with non-empty query, automatically switch category to 'all' so search is global
+      if (currentSearch && currentFilter !== "all") {
+        currentFilter = "all";
+        faqFilterBtns.forEach(btn => {
+          if (btn.getAttribute("data-filter") === "all") btn.classList.add("active");
+          else btn.classList.remove("active");
+        });
+      }
+
       closeAllArchiveItems();
       updateArchiveList();
     });
@@ -297,23 +327,111 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  if (faqResetSearchBtn) {
+    faqResetSearchBtn.addEventListener("click", () => {
+      setCategory("all", true);
+      if (faqSearchInput) faqSearchInput.focus();
+    });
+  }
+
   faqFilterBtns.forEach(btn => {
     btn.addEventListener("click", () => {
       const filter = btn.getAttribute("data-filter") || "all";
-      setCategory(filter);
+      setCategory(filter, true);
     });
   });
+
+  // Expand / Collapse Full Directory Toggle View
+  function toggleDirectoryView() {
+    if (!scrollBox) return;
+    const isExpanded = scrollBox.classList.contains("expanded");
+    if (isExpanded) {
+      scrollBox.classList.remove("expanded");
+      if (faqToggleViewText) faqToggleViewText.textContent = "Expand Full Directory";
+      if (faqToggleViewBtn) {
+        faqToggleViewBtn.setAttribute("aria-expanded", "false");
+        faqToggleViewBtn.innerHTML = '<i class="fas fa-expand-alt me-1"></i> <span id="faqToggleViewText">Expand Full Directory</span>';
+      }
+      if (faqToggleViewBtnBottom) {
+        faqToggleViewBtnBottom.setAttribute("aria-expanded", "false");
+        faqToggleViewBtnBottom.innerHTML = '<i class="fas fa-expand-alt me-1"></i> Expand Full Directory';
+      }
+      if (faqScrollHint) faqScrollHint.style.display = "flex";
+      scrollBox.scrollTop = 0;
+    } else {
+      scrollBox.classList.add("expanded");
+      if (faqToggleViewText) faqToggleViewText.textContent = "Collapse Compact View";
+      if (faqToggleViewBtn) {
+        faqToggleViewBtn.setAttribute("aria-expanded", "true");
+        faqToggleViewBtn.innerHTML = '<i class="fas fa-compress-alt me-1"></i> <span id="faqToggleViewText">Collapse Compact View</span>';
+      }
+      if (faqToggleViewBtnBottom) {
+        faqToggleViewBtnBottom.setAttribute("aria-expanded", "true");
+        faqToggleViewBtnBottom.innerHTML = '<i class="fas fa-compress-alt me-1"></i> Collapse Compact View';
+      }
+      if (faqScrollHint) faqScrollHint.style.display = "none";
+    }
+  }
+
+  if (faqToggleViewBtn) {
+    faqToggleViewBtn.addEventListener("click", toggleDirectoryView);
+  }
+  if (faqToggleViewBtnBottom) {
+    faqToggleViewBtnBottom.addEventListener("click", toggleDirectoryView);
+  }
 
   // Support jumping to FAQ category from other sections (e.g. from About section)
   document.querySelectorAll("[data-faq-jump]").forEach(el => {
     el.addEventListener("click", () => {
       const cat = el.getAttribute("data-faq-jump");
-      if (cat) setCategory(cat);
+      if (cat) setCategory(cat, true);
     });
   });
 
   // Initial render of archive list
   updateArchiveList();
+
+  // Interactive Room Rates Quick Filter Strip
+  const roomFilterPills = document.querySelectorAll(".rate-strip-pill");
+  const roomCards = document.querySelectorAll(".room-card");
+
+  roomFilterPills.forEach(pill => {
+    pill.style.cursor = "pointer";
+    pill.setAttribute("role", "button");
+    pill.setAttribute("tabindex", "0");
+    pill.setAttribute("title", "Click to view room details");
+
+    function filterToRoom() {
+      const pillType = (pill.querySelector(".rate-strip-type")?.textContent || "").toLowerCase();
+      roomCards.forEach(card => {
+        const cardTitle = (card.getAttribute("data-room-title") || "").toLowerCase();
+        // Check match
+        const matches = pillType.includes(cardTitle.slice(0, 6)) || cardTitle.includes(pillType.slice(0, 6)) ||
+          (pillType.includes("dorm") && cardTitle.includes("dorm")) ||
+          (pillType.includes("hall") && cardTitle.includes("hall")) ||
+          (pillType.includes("delux") && cardTitle.includes("delux"));
+        
+        if (matches) {
+          card.scrollIntoView({ behavior: "smooth", block: "center" });
+          card.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
+          card.style.transform = "scale(1.03)";
+          card.style.boxShadow = "0 0 0 3px var(--primary-green), 0 12px 28px rgba(22, 91, 68, 0.25)";
+          setTimeout(() => {
+            card.style.transform = "";
+            card.style.boxShadow = "";
+          }, 1800);
+        }
+      });
+    }
+
+    pill.addEventListener("click", filterToRoom);
+    pill.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        filterToRoom();
+      }
+    });
+  });
 
   // 7. Interactive Luxury Review Carousel
   const reviewsTrack = document.getElementById("reviewsTrack");

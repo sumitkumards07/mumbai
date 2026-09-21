@@ -191,32 +191,6 @@
       </div>
     </header>
 
-    <!-- Floating Booking & Plan Your Stay Card (Rounded) -->
-    <section class="hero-booking-card" aria-label="Plan Your Stay Quick Card">
-      <div class="container">
-        <div class="booking-card-inner">
-          <div>
-            <div class="booking-field-label">Plan Your Stay</div>
-            <div class="booking-field-val">Direct Reservation & Inquiry</div>
-            <div class="booking-field-desc">Check availability directly with our dedicated reception team.</div>
-          </div>
-          <div>
-            <div class="booking-field-label">Accommodation Types</div>
-            <div class="booking-field-val">AC, Non-AC, Halls & Dorms</div>
-            <div class="booking-field-desc">Starting from ₹200 to ₹3000 / night</div>
-          </div>
-          <div>
-            <div class="booking-field-label">Location Hub</div>
-            <div class="booking-field-val">South Mumbai Epicenter</div>
-            <div class="booking-field-desc">Close to CSMT, Marine Lines & Derasars</div>
-          </div>
-          <div>
-            <a href="https://wa.me/919760933661?text=Hello%2C%20I%20want%20to%20know%20about%20room%20availability%20and%20booking" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp me-2"></i> Book Your Room</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ==================== ROOMS & RATES SECTION ==================== -->
     <section id="rooms" class="section-padding bg-cream">
       <div class="container">
@@ -968,7 +942,7 @@
         </div>
 
         <!-- Part 2: Designed Inner Scroll Archive for All Remaining FAQs & Heritage Topics -->
-        <div class="faq-archive-section">
+        <div class="faq-archive-section" id="directory">
           <div class="faq-archive-header">
             <span class="eyebrow">Comprehensive Directory</span>
             <h3 class="faq-archive-title">Complete Knowledge & FAQ Archive</h3>
@@ -992,16 +966,22 @@
             <button type="button" class="faq-filter-btn" data-filter="pilgrims">Pilgrims & Sanghs (152)</button>
           </div>
 
-          <div class="faq-stats-bar" id="faqStats">Showing all 208 topics inside archive</div>
+          <div class="faq-archive-toolbar">
+            <div class="faq-stats-bar" id="faqStats">Showing all 208 topics inside archive</div>
+            <button type="button" class="btn-faq-toggle-view" id="faqToggleViewBtn" aria-expanded="false" title="Toggle between compact scroll box and full expanded view">
+              <i class="fas fa-expand-alt me-1"></i> <span id="faqToggleViewText">Expand Full Directory</span>
+            </button>
+          </div>
 
           <!-- Designed Inner Scroll Container -->
           <div class="faq-scroll-box" id="faqScrollBox">
 
             <!-- Empty Search State -->
             <div class="faq-empty-state" id="faqEmptyState" style="display: none; text-align: center; padding: 2.5rem 1rem;">
-              <i class="fas fa-search" style="font-size: 2rem; color: var(--primary-green); margin-bottom: 0.75rem; display: block; opacity: 0.6;"></i>
-              <h5 style="color: var(--deep-green); font-size: 1.1rem; margin-bottom: 0.4rem; font-family: var(--font-ui); font-weight: 700;">No matching questions found</h5>
-              <p style="color: var(--soft-grey); font-size: 0.88rem; margin: 0;">Try searching for keywords like <strong>room, check-in, bhojanalay, dadar, ac, or booking</strong>.</p>
+              <i class="fas fa-search" style="font-size: 2.2rem; color: var(--primary-green); margin-bottom: 0.75rem; display: block; opacity: 0.6;"></i>
+              <h5 style="color: var(--deep-green); font-size: 1.15rem; margin-bottom: 0.4rem; font-family: var(--font-ui); font-weight: 700;">No matching questions found</h5>
+              <p style="color: var(--soft-grey); font-size: 0.88rem; margin: 0 0 1.25rem 0;">Try searching for keywords like <strong>room, check-in, bhojanalay, dadar, ac, parking, or booking</strong>.</p>
+              <button type="button" class="btn btn-primary btn-sm" id="faqResetSearchBtn"><i class="fas fa-redo-alt me-1"></i> Clear Search & Show All Topics</button>
             </div>
 
             <div class="faq-item" data-category="all about heritage all rooms location pilgrims" data-question="A Spiritual Sanctuary in the Heart of Mumbai" data-answer="Shree Kshetrapal Jain Atithi Bhavan is a serene and deeply spiritual sanctuary located in the bustling heart of South Mumbai, specifically in Zaobawadi, Chira Bazar, near the famous Ram Mandir in Thakurdwar. Established with the noble intention of serving the Jain community, yatris (pilgrims), and respectful travelers, our Dharamshala stands as a beacon of purity, tranquility, and traditional hospitality. In a fast-paced metropolitan city like Mumbai, finding a place that resonates with the core values of Jainism—Ahimsa (non-violence), Satya (truth), and Aparigraha (non-possessiveness)—can be challenging. We bridge that gap by offering an environment where guests can disconnect from urban chaos and reconnect with their spiritual roots.">
@@ -3501,9 +3481,14 @@
             </div>
           </div>
 
-          <!-- Scroll Hint -->
-          <div class="faq-scroll-hint">
-            <i class="fas fa-arrow-down-long"></i> Scroll inside the box above to explore all topics <i class="fas fa-arrow-up-long"></i>
+          <!-- Archive Footer Controls -->
+          <div class="faq-archive-footer">
+            <div class="faq-scroll-hint" id="faqScrollHint">
+              <i class="fas fa-arrow-down-long"></i> Scroll inside the box to explore all topics <i class="fas fa-arrow-up-long"></i>
+            </div>
+            <button type="button" class="btn-faq-toggle-view" id="faqToggleViewBtnBottom" aria-expanded="false">
+              <i class="fas fa-expand-alt me-1"></i> Expand Full Directory
+            </button>
           </div>
         </div>
       </div>
