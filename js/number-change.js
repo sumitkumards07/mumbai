@@ -2,7 +2,7 @@
 // GLOBAL SETTING: CHANGE PHONE NUMBER HERE
 // ==========================================
 // Change the number below, and it will automatically update everywhere on the site!
-const GLOBAL_PHONE_NUMBER = "8930689739";
+const GLOBAL_PHONE_NUMBER = "9760933661";
 
 document.addEventListener("DOMContentLoaded", function () {
     const num = GLOBAL_PHONE_NUMBER;
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // 2. Update all Call Links
     document.querySelectorAll('a[href^="tel:"]').forEach(link => {
         link.href = `tel:+91${num}`;
-        if (link.innerText.includes("+91") || link.innerText.includes("8930689739")) {
+        if (link.innerText.includes("+91") || link.innerText.includes("9760933661") || /\d{10}/.test(link.innerText)) {
             link.innerText = link.innerText.replace(/(\+91\s*)?\d{10}/, `+91 ${num}`);
         }
     });
