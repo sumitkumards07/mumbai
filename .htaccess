@@ -1,0 +1,38 @@
+# =======================================================================
+# 301 PERMANENT REDIRECTS & CANONICAL DOMAIN CONSOLIDATION
+# Target Canonical: https://www.kshetrapaljainatithibhavan.co.in/
+# =======================================================================
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+# 1. Redirect legacy domains (kshetrapaljainatithibhavan.shop & shrikshetrapaljainatithibhavan.in)
+RewriteCond %{HTTP_HOST} ^(www\.)?kshetrapaljainatithibhavan\.shop$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^(www\.)?shrikshetrapaljainatithibhavan\.in$ [NC]
+RewriteRule ^(.*)$ https://www.kshetrapaljainatithibhavan.co.in/$1 [R=301,L]
+
+# 2. Redirect non-www to www on canonical domain
+RewriteCond %{HTTP_HOST} ^kshetrapaljainatithibhavan\.co\.in$ [NC]
+RewriteRule ^(.*)$ https://www.kshetrapaljainatithibhavan.co.in/$1 [R=301,L]
+
+# 3. Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://www.kshetrapaljainatithibhavan.co.in/$1 [R=301,L]
+
+# 4. Custom 404 Error Document
+ErrorDocument 404 /404.html
+</IfModule>
+
+# Caching directives for performance
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType image/jpg "access plus 1 year"
+ExpiresByType image/jpeg "access plus 1 year"
+ExpiresByType image/gif "access plus 1 year"
+ExpiresByType image/png "access plus 1 year"
+ExpiresByType image/webp "access plus 1 year"
+ExpiresByType image/avif "access plus 1 year"
+ExpiresByType text/css "access plus 1 month"
+ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
