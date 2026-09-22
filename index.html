@@ -30,6 +30,26 @@
   <meta name="twitter:description" content="Clean, affordable Jain accommodation in Thakurdwar, Chira Bazar, Mumbai. AC/Non-AC rooms, dormitories & AC hall from ₹800 to ₹3,850/night.">
   <meta name="twitter:image" content="https://www.kshetrapaljainatithibhavan.co.in/images/gallery/Gallery%206.avif">
 
+  <!-- Preload LCP Candidate with fetchpriority="high" -->
+  <link rel="preload" as="image" href="images/hero-bg.png" fetchpriority="high">
+
+  <!-- Speculation Rules API for instant prefetch/prerender -->
+  <script type="speculationrules">
+  {
+    "prerender": [
+      {
+        "source": "list",
+        "urls": [
+          "https://www.kshetrapaljainatithibhavan.co.in/rooms/",
+          "https://www.kshetrapaljainatithibhavan.co.in/contact/",
+          "https://www.kshetrapaljainatithibhavan.co.in/jain-accommodation-mumbai/",
+          "https://www.kshetrapaljainatithibhavan.co.in/nearby-places/"
+        ]
+      }
+    ]
+  }
+  </script>
+
   <!-- Google Fonts: DM Serif Display & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,6 +117,80 @@
       {"@type": "LocationFeatureSpecification", "name": "Air Conditioned Rooms & Hall", "value": true},
       {"@type": "LocationFeatureSpecification", "name": "Dormitory Facility", "value": true},
       {"@type": "LocationFeatureSpecification", "name": "Walking Distance to Jain Derasars", "value": true}
+    ],
+    "containsPlace": [
+      {
+        "@type": "HotelRoom",
+        "name": "Dormitory – Bed",
+        "description": "Budget single bed in clean, ventilated dormitory hall for yatris and pilgrims.",
+        "offers": {
+          "@type": "Offer",
+          "price": "800",
+          "priceCurrency": "INR",
+          "availability": "https://schema.org/InStock",
+          "url": "https://www.kshetrapaljainatithibhavan.co.in/rooms/"
+        }
+      },
+      {
+        "@type": "HotelRoom",
+        "name": "AC Hall – Bed",
+        "description": "Individual bed in air-conditioned spacious shared hall.",
+        "offers": {
+          "@type": "Offer",
+          "price": "800",
+          "priceCurrency": "INR",
+          "availability": "https://schema.org/InStock",
+          "url": "https://www.kshetrapaljainatithibhavan.co.in/rooms/"
+        }
+      },
+      {
+        "@type": "HotelRoom",
+        "name": "Non-AC Room",
+        "description": "Clean, ventilated private non-AC room with attached washroom and 24/7 hot water.",
+        "offers": {
+          "@type": "Offer",
+          "price": "1800",
+          "priceCurrency": "INR",
+          "availability": "https://schema.org/InStock",
+          "url": "https://www.kshetrapaljainatithibhavan.co.in/rooms/"
+        }
+      },
+      {
+        "@type": "HotelRoom",
+        "name": "Super Deluxe Room",
+        "description": "Spacious family room with premium bedding and attached washroom.",
+        "offers": {
+          "@type": "Offer",
+          "price": "2400",
+          "priceCurrency": "INR",
+          "availability": "https://schema.org/InStock",
+          "url": "https://www.kshetrapaljainatithibhavan.co.in/rooms/"
+        }
+      },
+      {
+        "@type": "HotelRoom",
+        "name": "Super Delux Room (AC)",
+        "description": "Air-conditioned premium deluxe room with attached washroom and 24/7 hot water.",
+        "offers": {
+          "@type": "Offer",
+          "price": "2800",
+          "priceCurrency": "INR",
+          "availability": "https://schema.org/InStock",
+          "url": "https://www.kshetrapaljainatithibhavan.co.in/rooms/"
+        }
+      },
+      {
+        "@type": "HotelRoom",
+        "name": "6 Beds AC Room",
+        "description": "Large air-conditioned room with 6 beds for family groups and pilgrim sanghs.",
+        "offers": {
+          "@type": "Offer",
+          "price": "3850",
+          "priceCurrency": "INR",
+          "availability": "https://schema.org/InStock",
+          "url": "https://www.kshetrapaljainatithibhavan.co.in/rooms/"
+        }
+      }
     ],
     "aggregateRating": {
       "@type": "AggregateRating",
@@ -482,12 +576,12 @@
         <!-- Welcome Showcase Card -->
         <div class="about-welcome-card">
           <div class="about-visual-box">
-            <img src="images/gallery/Gallery 1.avif" alt="Entrance view of Shree Kshetrapal Jain Atithi Bhavan in Mumbai." loading="lazy">
+            <img src="images/gallery/Gallery 1.avif" alt="Entrance view of Shree Kshetrapal Jain Atithi Bhavan in Mumbai." fetchpriority="high">
           </div>
           <div class="about-welcome-content">
             <span class="eyebrow">A Sacred Sanctuary in South Mumbai</span>
             <h3>Rooted in Peace, Purity & Warm Jain Hospitality</h3>
-            <p>Shree Kshetrapal Jain Atithi Bhavan is a serene and deeply spiritual sanctuary located in the bustling heart of South Mumbai, specifically in Zaobawadi, Chira Bazar, near the famous Ram Mandir in Thakurdwar. Established with the noble intention of serving the Jain community, yatris (pilgrims), and respectful travelers, our Dharamshala stands as a beacon of purity, tranquility, and traditional hospitality.</p>
+            <p>Shree Kshetrapal Jain Atithi Bhavan is a serene and deeply spiritual sanctuary located in the bustling heart of South Mumbai, specifically in Zaobawadi, Chira Bazar, near the famous Ram Mandir in Thakurdwar. Established with the noble intention of serving the Jain community, yatris (pilgrims), and respectful travelers, our Dharamshala provides authentic purity, tranquility, and traditional hospitality.</p>
 
             <div class="about-features-pills">
               <span class="about-pill"><i class="fas fa-om"></i> Ahimsa & Purity</span>
