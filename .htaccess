@@ -20,7 +20,10 @@ RewriteRule ^(.*)$ https://www.kshetrapaljainatithibhavan.co.in/$1 [R=301,L]
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://www.kshetrapaljainatithibhavan.co.in/$1 [R=301,L]
 
-# 4. Custom 404 Error Document
+# 4. Standard trust alias (/about -> /)
+RewriteRule ^about/?$ https://www.kshetrapaljainatithibhavan.co.in/ [R=301,L]
+
+# 5. Custom 404 Error Document
 ErrorDocument 404 /404.html
 </IfModule>
 
