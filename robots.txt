@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 
-# Canonical XML Sitemap
+# Canonical XML Sitemap & LLM Knowledge Document
 Sitemap: https://www.kshetrapaljainatithibhavan.co.in/sitemap.xml
+# AI Search / LLM Context
+# https://www.kshetrapaljainatithibhavan.co.in/llms.txt
